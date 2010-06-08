@@ -1,0 +1,24 @@
+#!/usr/bin/env ruby
+
+require 'socket'
+require 'pathname'
+
+APP_ROOT = File.join(File.dirname(Pathname.new(__FILE__).realpath),'/..')
+LIB_ROOT = APP_ROOT + '/lib'
+require LIB_ROOT + '/cascader'
+
+user = User.new
+
+if ARGV.first.eql? "--help" or ARGV.first.eql? '-h'
+    puts 'Find a cascader:'
+    puts '    cascader'.blue
+    puts
+    puts 'Do some cascading:'
+    puts '    cascader cascade "Your Name" [topics which you cascade]'.blue
+elsif ARGV.first.eql? "cascade"
+    cascade, name, *topics = ARGV
+    server = Server.new(name, user.hostname, topics)
+else
+    client = Client.new(user)
+    client.search
+end

@@ -1,0 +1,78 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'pathname'
+
+require File.join(File.dirname(Pathname.new(__FILE__).realpath),'../lib/print.rb')
+
+options = {}
+
+optparse = OptionParser.new do |opts|
+    opts.banner = "Usage: print [options] filename"
+    
+    opts.on('-h', '--help', 'Display this screen') do
+        puts opts
+        exit
+    end
+    
+    options[:reprint] = false
+    opts.on('-r', '--reprint', 'Reprint the last job') do
+        options[:reprint] = true
+    end
+    
+    options[:abort] = false
+    opts.on("-a", "--abort", 'Abort the last job') do
+        options[:abort] = true
+    end
+    
+    options[:colour] = false
+    opts.on( "-c", "--colour", "Print to a colour printer" ) do
+        options[:colour] = true
+    end
+    
+    options[:printer] = nil
+    opts.on('-P', '--printer PRINTER', 'Force \'print\' to use PRINTER') do |printer|
+        options[:printer] = printer
+    end
+    
+    options[:number] = nil
+    opts.on('-n', '--number COUNT', 'Print the document COUNT times') do |count|
+        options[:number] = count
+    end
+end
+
+optparse.parse!
+
+user = User.new
+print_manager = user.print_manager
+
+if options[:abort]
+    puts "Cancelling last job..."
+    print_manager.abort_last_job(user)
+    exit
+end
+
+if options[:colour]
+    print_manager.needs_colour = true
+end
+
+if options[:printer].nil?
+    options[:printer] = user.best_printer
+end
+printer = options[:printer]
+
+if options[:number].nil?
+    options[:number] = 1
+else
+    options[:number] = options[:number].to_i
+end
+number = options[:number]
+
+if options[:reprint]
+    printer, filename = user.get_last_job
+    print_manager.print(printer, filename, number, user)
+end
+
+ARGV.each do |filename|
+    print_manager.print(printer, filename, number, user)
+end
