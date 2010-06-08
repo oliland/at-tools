@@ -1,0 +1,197 @@
+#!/usr/bin/env ruby
+
+require 'socket'
+require 'pathname'
+require 'gtk2'
+
+APP_ROOT = File.join(File.dirname(Pathname.new(__FILE__).realpath),'/..')
+LIB_ROOT = APP_ROOT + '/lib'
+require LIB_ROOT + '/cascader-gui'
+
+@first_run = true
+@server = nil
+@details = ["none","none"]
+@user = nil
+
+authors = ["Chris \'xoebus\' Brown", "Alex \'shearn89\' Shearn"]
+
+window = Gtk::Window.new
+window.set_default_size(400,200)
+window.signal_connect("delete_event") {
+	window.hide_all
+}
+
+
+#####
+### System tray
+#####
+si=Gtk::StatusIcon.new
+# si.stock=Gtk::Stock::DIALOG_INFO
+si.pixbuf=Gdk::Pixbuf.new(LIB_ROOT + '/icons/cascade32.png')
+si.tooltip='Cascader'
+
+# RIGHT CLICK
+## need both scascade and cascadebutton here in order for label changing to work.
+scascade=Gtk::ImageMenuItem.new(label="Cascade", use_underline=false)
+cascadebutton = Gtk::ToggleButton.new(label = "Cascade")
+aboutdialog = Gtk::AboutDialog.new
+
+scascade.signal_connect('activate'){|icon|
+	if @first_run
+		@user = UserGui.new
+		get_cascader_info(@user)
+	end
+	unless @server.nil?
+		@server.status ? @server.stop(scascade,cascadebutton,si) : @server.start(scascade,cascadebutton,si)
+	end
+	}
+
+ssearch=Gtk::ImageMenuItem.new(label="Find a Cascader", use_underline=false)
+ssearch.signal_connect('activate'){|icon|
+	@user = UserGui.new
+	client = ClientGui.new(@user)
+  	client.search($main_application_window)
+  	}
+
+swindowshow=Gtk::ImageMenuItem.new(label="Show Interface", use_underline=false)
+swindowshow.signal_connect('activate'){
+	window.show_all
+	}
+
+sabout=Gtk::ImageMenuItem.new(label="About", use_underline=false)
+sabout.signal_connect('activate'){
+	aboutdialog.run
+	aboutdialog.hide
+	}
+	
+# LEFT CLICK
+si.signal_connect('activate'){
+	if @first_run
+		@user = UserGui.new
+		get_cascader_info(@user)
+	end
+	unless @server.nil? 
+		@server.status ? @server.stop(scascade,cascadebutton,si) : @server.start(scascade,cascadebutton,si)
+	end
+	}
+squit=Gtk::ImageMenuItem.new(Gtk::Stock::QUIT)
+squit.signal_connect('activate'){Gtk.main_quit}
+simenu=Gtk::Menu.new
+simenu.append(scascade)
+simenu.append(ssearch)
+simenu.append(swindowshow)
+simenu.append(Gtk::SeparatorMenuItem.new)
+simenu.append(sabout)
+simenu.append(squit)
+simenu.show_all
+
+si.signal_connect('popup-menu'){|tray, button, time| simenu.popup(nil, nil, button, time)}
+
+#####
+### MAIN WINDOW
+#####
+
+table1 = Gtk::Table.new(2, 3, true)
+
+findbutton = Gtk::Button.new("Find a Cascader")
+findbutton.signal_connect("clicked") { |b|
+	@user = UserGui.new
+	client = ClientGui.new(@user)
+  	client.search(window)
+}
+
+def get_cascader_info(user)
+    dialog = Gtk::Dialog.new("Cascader Info",
+                             $main_application_window,
+                             Gtk::Dialog::MODAL,
+                             [ Gtk::Stock::OK, Gtk::Dialog::RESPONSE_ACCEPT ],
+                             [ Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_REJECT ])
+    dialog.set_default_size(300,100)
+    dialog.set_default_response(Gtk::Dialog::RESPONSE_ACCEPT)
+    
+    entry1 = Gtk::Entry.new
+    entry1.max_length=13
+    entry1.text = ENV['USER']
+    entry1.select_region(0,-1)
+
+    entry1lbl = Gtk::Label.new("Username: ")
+    entry2lbl = Gtk::Label.new("Topics: ")
+    
+    entry2 = Gtk::Entry.new
+    entry2.max_length=50
+    entry2.set_activates_default(true)
+    entry2.text = "comma,seperated,topics"
+    entry2.select_region(0,-1)
+    
+    tableholder = Gtk::Table.new(2,3,true)
+    
+    tableholder.attach(entry1lbl,0,1,0,1)
+    tableholder.attach(entry1,1,3,0,1)
+    tableholder.attach(entry2lbl,0,1,1,2)
+    tableholder.attach(entry2,1,3,1,2)
+    
+    dialog.vbox.add(tableholder)
+    
+    dialog.show_all
+    
+    dialog.run do |reply|
+    	case reply
+    		when Gtk::Dialog::RESPONSE_ACCEPT
+    			@details = [entry1.text,entry2.text]
+    			@server = ServerGui.new(@details[0], @user.hostname, @details[1])
+    			@first_run = false
+    	end
+    	dialog.destroy
+    end
+end
+
+# CASCADE BUTTON
+cascadebutton.signal_connect("toggled") { |w|
+	w.active? ? false : true
+	
+	if @user.nil?
+		@user = UserGui.new
+	end
+	
+	details = ["shearn89","[inf2,python]"]
+	
+	if @first_run
+		get_cascader_info(@user)
+	end
+	unless @server.nil? 
+		@server.status ? @server.stop(w,scascade,si) : @server.start(w,scascade,si)
+	end
+}
+
+
+aboutdialog.name = "Cascader"
+aboutdialog.version = "1.0"
+aboutdialog.comments = "Cascader helps you help.\nCascader helps you get help."
+aboutdialog.license = "This program shared under a Creative Commons license.\nSee: http://creativecommons.org/licenses/by-nc-sa/2.0/uk/ for more info."
+aboutdialog.website = "http://github.com/shearn89/cascader-gui"
+aboutdialog.website_label = "Fork us on GitHub"
+aboutdialog.authors = authors
+# aboutdialog.logo = Gdk::Pixbuf.new(LIB_ROOT + '/icons/300x100-license.png')
+
+about = Gtk::Button.new("About")
+about.signal_connect("clicked") {
+	aboutdialog.run
+	aboutdialog.hide
+}
+
+exitbutton = Gtk::Button.new("Quit")
+exitbutton.signal_connect("clicked") {
+	Gtk.main_quit
+}
+
+window.border_width = 10
+window.add(table1)
+
+table1.attach(findbutton, 0, 2, 0, 1, nil, nil, 10, 10)
+table1.attach(cascadebutton, 2, 3, 0, 1, nil, nil, 10, 10)
+table1.attach(about, 0, 1, 1, 2, nil, nil, 20, 20)
+table1.attach(exitbutton, 1, 3, 1, 2, nil, nil, 10, 10)
+
+window.show_all
+
+Gtk.main
