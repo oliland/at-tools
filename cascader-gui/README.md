@@ -16,4 +16,13 @@
 - Graphical map of your lab/floor and where cascaders are.
 
 ## Screenshots ##
-Have a look at the **screens** directory for some screenshots of the program in action.
+![Main Interface](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/main.png)
+![Enter your cascader information](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/cascader-info.png)
+![Lets you know it works...](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/confirmation.png)
+![Now cascading](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/cascading.png)
+![Stop cascading?](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/stopme.png)
+![Stopped](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/not_cascading.png)
+![Search for cascaders](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/search1.png)
+![None found :-(](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/no-cascaders.png)
+![Found one!](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/found-one.png)
+
