@@ -57,4 +57,3 @@ stastny
 salei
 budaj
 liles
-thordev

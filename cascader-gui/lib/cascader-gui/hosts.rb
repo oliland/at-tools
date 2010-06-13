@@ -25,7 +25,14 @@ class HostManager
                 return lab if computers.include? hostname
             end
         end
-        puts "The computer you are using doesn't exist. Seek help."
+        # puts "The computer you are using appears not to exist, are you on DICE and on level5?"
+        error = Gtk::MessageDialog.new($main_app_window,
+        	Gtk::Dialog::MODAL,
+        	Gtk::MessageDialog::INFO,
+        	Gtk::MessageDialog::BUTTONS_CLOSE,
+        	"The computer [%s] you are using appears not to exist.\nAre you on DICE and on level5?\nCascader-gui will now quit." % hostname)
+        error.run
+        error.destroy
         Gtk.main_quit
         exit
     end
@@ -36,7 +43,14 @@ class HostManager
                 return floor if computers.include? hostname
             end
         end
-        puts "The computer you are using doesn't exist. Seek help."
+        # puts "The computer you are using appears not to exist, are you on DICE and on level5?"
+        error = Gtk::MessageDialog.new($main_app_window,
+        	Gtk::Dialog::MODAL,
+        	Gtk::MessageDialog::INFO,
+        	Gtk::MessageDialog::BUTTONS_CLOSE,
+        	"The computer [%s] you are using appears not to exist.\nAre you on DICE and on level5?\nCascader-gui will now quit." % hostname)
+        error.run
+        error.destroy
         Gtk.main_quit
         exit
     end
