@@ -127,7 +127,7 @@ class ClientGui
 	        elsif @user.lab == "at5w"
         		at5w_map(@user.hostname,lab_cascaders_map)
         	elsif @user.lab == "at5s"
-	        	at5s_map(@user.hostname,lab_cascader_map)
+	        	at5s_map(@user.hostname,lab_cascaders_map)
 	        end
 #	end
 	
