@@ -36,4 +36,3 @@ bazzini
 stobbart
 burrows
 wideman
-THOR-DEV

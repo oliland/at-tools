@@ -57,9 +57,8 @@ class ClientGui
         lab_hosts = HostManager.get_hosts_lab(@user.floor, @user.lab)
         floor_hosts = HostManager.get_hosts_floor(@user.floor)
         lab_cascaders = []
+        lab_cascaders_map = []
         floor_cascaders = []
-        
-        puts @user.lab
         
         lab_hosts.each do |hostname|
             Thread.start do
@@ -97,7 +96,9 @@ class ClientGui
         
         (floor_cascaders & lab_cascaders).each { |dup| floor_cascaders.delete(dup) }
 
-	unless lab_cascaders.length > 0
+#	unless lab_cascaders.length > 0
+	        
+	        lab_cascaders_map = lab_cascaders.slice(0..-1)
 	        
 	        lab_cascaders.map! { |cascader| format_cascader(cascader) }
 		output = "There are #{lab_cascaders.length} cascaders in this lab:\n"
@@ -116,19 +117,19 @@ class ClientGui
         	)
         	dialog.run
         	dialog.destroy
-	end
-	
-        puts @user.hostname
+#	end
         
-        if lab_cascaders.length > 0
+        puts lab_cascaders_map
+        
+#        if lab_cascaders.length > 0
         	if @user.lab == "at5n"
-	        	at5n_map
+	        	at5n_map(@user.hostname,lab_cascaders_map)
 	        elsif @user.lab == "at5w"
-        		at5w_map
+        		at5w_map(@user.hostname,lab_cascaders_map)
         	elsif @user.lab == "at5s"
-	        	at5s_map
+	        	at5s_map(@user.hostname,lab_cascader_map)
 	        end
-	end
+#	end
 	
     end
 end #class

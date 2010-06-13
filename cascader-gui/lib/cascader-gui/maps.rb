@@ -1,11 +1,15 @@
 require 'gtk2'
 
-def at5n_map
-	level5_n = IO.readlines(File.dirname(__FILE__) + '/../../hosts/level5-n.txt').map {|host| host.chomp}
-
-#	puts level5_n
-#	level5_n.each {|pc| puts pc}
+def get_details(cascader)
+	cascader_re = /^\[([^\]]*)\]\[([^\]]*)\]\[([^\]]*)\]$/
+	name = cascader_re.match(cascader)[1]
+	host = cascader_re.match(cascader)[2]
+	topics = cascader_re.match(cascader)[3].split(':').map { |topic| topic.capitalize }
 	
+	return [name,host,topics]
+end
+
+def at5n_map(hostname,cascaders)
 	cascwindow = Gtk::Window.new("5.04, North Lab")
 	cascwindow.set_default_size(800,600)
 	
@@ -54,9 +58,6 @@ def at5n_map
 	doorbtn = Gtk::Label.new("THE DOOR")
 	cascmap.attach(doorbtn,0,1,10,11)
 	
-#	nlabbtn = Gtk::Label.new("5.04, North Lab")
-#	cascmap.attach(nlabbtn,1,4,3,5)
-	
 	danclabtn = Gtk::Label.new("dancla")
 	cascmap.attach(danclabtn,4,5,10,11)
 	baumgartnerbtn = Gtk::Label.new("baumgartner")
@@ -100,10 +101,7 @@ def at5n_map
 	cascmap.attach(burrowsbtn,2,3,19,20)
 	widemanbtn = Gtk::Label.new("wideman")
 	cascmap.attach(widemanbtn,3,4,19,20)
-	
-#	thordevbtn = Gtk::Label.new("thor-dev")
-#	cascmap.attach(thordevbtn,2,3,17,18)
-	
+		
 #####	END MACHINE SECTION
 
 	exitbtn = Gtk::Button.new("Close")
@@ -113,7 +111,106 @@ def at5n_map
    	
    	cascwindow.border_width = 10
    	cascwindow.add(cascmap)
-	
+   		
 	cascmap.attach(exitbtn, 2,3,10,11)
+	cascwindow.show_all
+end
+
+def at5s_map(hostname,cascaders)
+
+	cascwindow = Gtk::Window.new("5.03, South Lab")
+	cascwindow.set_default_size(800,600)
+	
+	cascmap = Gtk::Table.new(17,5,true)
+	
+	######## MACHINES
+	
+	dunsboroughbtn = Gtk::Label.new("dunsborough")
+	yallingupbtn = Gtk::Label.new("yallingup")
+	rockinghambtn = Gtk::Label.new("rockingham")
+	nannupbtn = Gtk::Label.new("nannup")
+	cascmap.attach(dunsboroughbtn,0,1,0,1)
+	cascmap.attach(yallingupbtn,1,2,0,1)
+	cascmap.attach(rockinghambtn,2,3,0,1)
+	cascmap.attach(nannupbtn,3,4,0,1)
+	
+	yellebtn = Gtk::Label.new("yelle")
+	harveybtn = Gtk::Label.new("harvey")
+	busseltonbtn = Gtk::Label.new("busselton")
+	cascmap.attach(yellebtn,0,1,2,3)
+	cascmap.attach(harveybtn,0,1,3,4)
+	cascmap.attach(busseltonbtn,0,1,4,5)
+	
+	savardbtn = Gtk::Label.new("savard")
+	sturmbtn = Gtk::Label.new("sturm")
+	schaeferbtn = Gtk::Label.new("schaefer")
+	sobotkabtn = Gtk::Label.new("sobotka")
+	cascmap.attach(savardbtn,4,5,2,3)
+	cascmap.attach(sturmbtn,4,5,3,4)
+	cascmap.attach(schaeferbtn,4,5,4,5)
+	cascmap.attach(sobotkabtn,4,5,5,6)
+	
+	bodnarchukbtn = Gtk::Label.new("bodnarchuk")
+	thombtn = Gtk::Label.new("thom")
+	columnbtn = Gtk::Label.new("COLUMN")
+	cascmap.attach(bodnarchukbtn,2,3,7,8)
+	cascmap.attach(thombtn,2,3,10,11)
+	cascmap.attach(columnbtn,2,3,8,10)
+	
+	doorbtn = Gtk::Label.new("DOOR")
+	cascmap.attach(doorbtn,4,5,8,10)
+	
+	mandurahbtn = Gtk::Label.new("mandura")
+	bunburybtn = Gtk::Label.new("bunbury")
+	vassebtn = Gtk::Label.new("vasse")
+	cascmap.attach(mandurahbtn,0,1,12,13)
+	cascmap.attach(bunburybtn,0,1,13,14)
+	cascmap.attach(vassebtn,0,1,14,15)
+	
+	leeuwinbtn = Gtk::Label.new("leeuwin")
+	subiacobtn = Gtk::Label.new("subiaco")
+	augustabtn = Gtk::Label.new("augusta")
+	albanybtn = Gtk::Label.new("albany")
+	cascmap.attach(leeuwinbtn,4,5,11,12)
+	cascmap.attach(subiacobtn,4,5,12,13)
+	cascmap.attach(augustabtn,4,5,13,14)
+	cascmap.attach(albanybtn,4,5,14,15)
+	
+	wallcliffebtn = Gtk::Label.new("wallcliffe")
+	ghautsbtn = Gtk::Label.new("ghauts")
+	pembertonbtn = Gtk::Label.new("pemberton")
+	esperancebtn = Gtk::Label.new("esperance")
+	cascmap.attach(wallcliffebtn,0,1,16,17)
+	cascmap.attach(ghautsbtn,1,2,16,17)
+	cascmap.attach(pembertonbtn,2,3,16,17)
+	cascmap.attach(esperancebtn,3,4,16,17)
+	
+	# me
+	thordevbtn = Gtk::Label.new("thordev")
+	cascmap.attach(thordevbtn,2,3,4,5)
+	
+	machinelist = [dunsboroughbtn, yallingupbtn, rockinghambtn, nannupbtn,
+	yellebtn, savardbtn, harveybtn, sturmbtn, busseltonbtn, schaeferbtn,
+	sobotkabtn, bodnarchukbtn, thombtn, leeuwinbtn, mandurahbtn, subiacobtn]
+		
+	######## END MACHINES
+
+	exitbtn = Gtk::Button.new("Close")
+   	exitbtn.signal_connect("clicked") {
+   		cascwindow.destroy
+   	}
+   	
+   	cascwindow.border_width = 10
+   	cascwindow.add(cascmap)
+	
+	puts cascaders
+	
+	cascmap.children.each { |machine|
+		if hostname == machine.text
+			machine.text=(">>YOU ARE HERE<<")
+		end
+	}
+	
+	cascmap.attach(exitbtn,0,1,8,9)
 	cascwindow.show_all
 end
