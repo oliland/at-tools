@@ -25,4 +25,4 @@
 ![Search for cascaders](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/search1.png)
 ![None found :-(](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/no-cascaders.png)
 ![Found one!](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/found-one.png)
-![Cascader on Map](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/casc-map.png)
+![Cascader on Map](http://github.com/xoebus/at-tools/raw/shearn89-maps/cascader-gui/screens/casc-map.png)
