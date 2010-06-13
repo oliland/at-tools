@@ -22,4 +22,3 @@ wallcliffe
 ghauts
 pemberton
 esperance
-thordev
