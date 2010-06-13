@@ -14,7 +14,6 @@ class ClientGui
         host = cascader_re.match(cascader)[2]
         topics = cascader_re.match(cascader)[3].split(':').map { |topic| topic.capitalize }
 
-	### FIX ME        
         lab = HostManager.name_lab(HostManager.lookup_lab(host))
         
         topics.map! do |topic|
@@ -60,6 +59,8 @@ class ClientGui
         lab_cascaders = []
         floor_cascaders = []
         
+        puts @user.lab
+        
         lab_hosts.each do |hostname|
             Thread.start do
                 begin
@@ -95,23 +96,39 @@ class ClientGui
         end
         
         (floor_cascaders & lab_cascaders).each { |dup| floor_cascaders.delete(dup) }
-        
-        lab_cascaders.map! { |cascader| format_cascader(cascader) }
-	output = "There are #{lab_cascaders.length} cascaders in this lab:\n"
-        lab_cascaders.each { |cascader| output << cascader+"\n" }
-        
-        floor_cascaders.map! { |cascader| format_cascader(cascader) }
-        output <<  "\nThere are #{floor_cascaders.length} other cascaders on this floor:\n"
-        floor_cascaders.each { |cascader| output << cascader+"\n" }
 
-        dialog = Gtk::MessageDialog.new(
-	       	parent,
-	      	Gtk::Dialog::MODAL,
-	        Gtk::MessageDialog::INFO,
-		Gtk::MessageDialog::BUTTONS_OK,
-               message=output
-        )
-        dialog.run
-        dialog.destroy
+	unless lab_cascaders.length > 0
+	        
+	        lab_cascaders.map! { |cascader| format_cascader(cascader) }
+		output = "There are #{lab_cascaders.length} cascaders in this lab:\n"
+        	lab_cascaders.each { |cascader| output << cascader+"\n" }
+        
+        	floor_cascaders.map! { |cascader| format_cascader(cascader) }
+        	output <<  "\nThere are #{floor_cascaders.length} other cascaders on this floor:\n"
+        	floor_cascaders.each { |cascader| output << cascader+"\n" }
+	        
+	        dialog = Gtk::MessageDialog.new(
+	       		parent,
+	      		Gtk::Dialog::MODAL,
+	        	Gtk::MessageDialog::INFO,
+			Gtk::MessageDialog::BUTTONS_OK,
+               	message=output
+        	)
+        	dialog.run
+        	dialog.destroy
+	end
+	
+        puts @user.hostname
+        
+        if lab_cascaders.length > 0
+        	if @user.lab == "at5n"
+	        	at5n_map
+	        elsif @user.lab == "at5w"
+        		at5w_map
+        	elsif @user.lab == "at5s"
+	        	at5s_map
+	        end
+	end
+	
     end
 end #class
