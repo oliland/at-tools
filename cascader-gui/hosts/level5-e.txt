@@ -12,4 +12,3 @@ fittipaldi
 ascari
 lauda
 prost
-thordev

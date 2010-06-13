@@ -222,7 +222,7 @@ end
 
 def at5e_map(hostname,cascaders)
 
-	cascwindow = Gtk::Window.new("5.03, South Lab")
+	cascwindow = Gtk::Window.new("5.01/2, East Labs")
 	cascwindow.set_default_size(800,600)
 	
 	cascmap = Gtk::Table.new(9,12,true)
@@ -295,5 +295,136 @@ def at5e_map(hostname,cascaders)
 	update_map(hostname,cascaders,cascmap)
 	
 	cascmap.attach(exitbtn,0,1,8,9)
+	cascwindow.show_all
+end
+
+def at5w_map(hostname,cascaders)
+
+	cascwindow = Gtk::Window.new("West Lab")
+	cascwindow.set_default_size(800,600)
+	
+	cascmap = Gtk::Table.new(12,11,true)
+	######## MACHINES
+
+	# me
+#	thordevbtn = Gtk::Label.new("thordev")
+#	cascmap.attach(thordevbtn,2,3,4,5)
+	
+	#  btn = Gtk::Label.new("
+	#  cascmap.attach(
+	
+	wallanderbtn = Gtk::Label.new("wallander")
+	lemmingbtn = Gtk::Label.new("lemming")
+	moosebtn = Gtk::Label.new("moose")
+	mankellbtn = Gtk::Label.new("mankell")
+	cascmap.attach(wallanderbtn,2,3,0,1)
+	cascmap.attach(lemmingbtn,2,3,1,2)
+	cascmap.attach(moosebtn,2,3,2,3)
+	cascmap.attach(mankellbtn,2,3,3,4)
+	
+	cottontailbtn = Gtk::Label.new("cottontail")
+	bobcatbtn = Gtk::Label.new("bobcat")
+	raccoonbtn = Gtk::Label.new("raccoon")
+	coyotebtn = Gtk::Label.new("coyote")
+	cascmap.attach(cottontailbtn,3,4,0,1)
+	cascmap.attach(bobcatbtn,3,4,1,2)
+	cascmap.attach(raccoonbtn,3,4,2,3)
+	cascmap.attach(coyotebtn,3,4,3,4)
+
+	infdoorbtn = Gtk::Label.new("Door to InfBase")
+	cascmap.attach(infdoorbtn,0,1,4,5)
+	
+	ohlundbtn = Gtk::Label.new("ohlund")
+	samuelssonbtn = Gtk::Label.new("samuelsson")
+	oduyabtn = Gtk::Label.new("oduya")
+	plekanecbtn = Gtk::Label.new("plekanec")
+	djurgardensbtn = Gtk::Label.new("djurgardens")
+	cascmap.attach(ohlundbtn,0,1,5,6)
+	cascmap.attach(samuelssonbtn,1,2,5,6)
+	cascmap.attach(oduyabtn,2,3,5,6)
+	cascmap.attach(plekanecbtn,3,4,5,6)
+	cascmap.attach(djurgardensbtn,4,5,5,6)
+	
+	col1btn = Gtk::Label.new("COLUMN")
+	bradfordbtn = Gtk::Label.new("bradford")
+	kostitsynbtn = Gtk::Label.new("kostitsyn")
+	kolvubtn = Gtk::Label.new("kolvu")
+	chipchurabtn = Gtk::Label.new("chipchura")
+	cascmap.attach(col1btn,0,1,6,7)
+	cascmap.attach(bradfordbtn,1,2,6,7)
+	cascmap.attach(kostitsynbtn,2,3,6,7)
+	cascmap.attach(kolvubtn,3,4,6,7)
+	cascmap.attach(chipchurabtn,4,5,6,7)
+	
+	willsiebtn = Gtk::Label.new("willsie")
+	raycroftbtn = Gtk::Label.new("raycroft")
+	guitebtn = Gtk::Label.new("guite")
+	clarkbtn = Gtk::Label.new("clark")
+	monotremebtn = Gtk::Label.new("monotreme")
+	cascmap.attach(willsiebtn,0,1,7,8)
+	cascmap.attach(raycroftbtn,1,2,7,8)
+	cascmap.attach(guitebtn,2,3,7,8)
+	cascmap.attach(clarkbtn,3,4,7,8)
+	cascmap.attach(monotremebtn,4,5,7,8)
+	
+	davidsonbtn = Gtk::Label.new("davidson")
+	coulthardbtn = Gtk::Label.new("coulthard")
+	hillbtn = Gtk::Label.new("hill")
+	brabhambtn = Gtk::Label.new("brabham")
+	mansellbtn = Gtk::Label.new("mansell")
+	cascmap.attach(davidsonbtn,0,1,8,9)
+	cascmap.attach(coulthardbtn,1,2,8,9)
+	cascmap.attach(hillbtn,2,3,8,9)
+	cascmap.attach(brabhambtn,3,4,8,9)
+	cascmap.attach(mansellbtn,4,5,8,9)
+	
+	col2btn = Gtk::Label.new("COLUMN")
+	hamiltonbtn = Gtk::Label.new("hamilton")
+	eishortbtn = Gtk::Label.new("eishort")
+	huntbtn = Gtk::Label.new("hunt")
+	assyntbtn = Gtk::Label.new("assynt")
+	cascmap.attach(col2btn,0,1,9,10)
+	cascmap.attach(hamiltonbtn,1,2,9,10)
+	cascmap.attach(eishortbtn,2,3,9,10)
+	cascmap.attach(huntbtn,3,4,9,10)
+	cascmap.attach(assyntbtn,4,5,9,10)
+	
+	homstrombtn = Gtk::Label.new("homstrom")
+	sennabtn = Gtk::Label.new("senna")
+	samsonovbtn = Gtk::Label.new("samsonov")
+	lidstormbtn = Gtk::Label.new("lidstorm")
+	modinbtn = Gtk::Label.new("modin")
+	cascmap.attach(homstrombtn,0,1,10,11)
+	cascmap.attach(sennabtn,1,2,10,11)
+	cascmap.attach(samsonovbtn,2,3,10,11)
+	cascmap.attach(lidstormbtn,3,4,10,11)
+	cascmap.attach(modinbtn,4,5,10,11)
+	
+	cumiskeybtn = Gtk::Label.new("cumiskey")
+	statsnybtn = Gtk::Label.new("statsny")
+	saleibtn = Gtk::Label.new("salei")
+	budajbtn = Gtk::Label.new("budaj")
+	lilesbtn = Gtk::Label.new("liles")
+	cascmap.attach(cumiskeybtn,0,1,11,12)
+	cascmap.attach(statsnybtn,1,2,11,12)
+	cascmap.attach(saleibtn,2,3,11,12)
+	cascmap.attach(budajbtn,3,4,11,12)
+	cascmap.attach(lilesbtn,4,5,11,12)
+	
+	
+	
+	######## END MACHINES
+
+	exitbtn = Gtk::Button.new("Close")
+   	exitbtn.signal_connect("clicked") {
+   		cascwindow.destroy
+   	}
+   	
+   	cascwindow.border_width = 10
+   	cascwindow.add(cascmap)
+	
+	update_map(hostname,cascaders,cascmap)
+	
+	cascmap.attach(exitbtn,8,9,2,3)
 	cascwindow.show_all
 end
