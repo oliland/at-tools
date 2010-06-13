@@ -202,9 +202,6 @@ def at5s_map(hostname,cascaders)
 	cascmap.attach(pembertonbtn,2,3,16,17)
 	cascmap.attach(esperancebtn,3,4,16,17)
 	
-	# me
-#	thordevbtn = Gtk::Label.new("thordev")
-#	cascmap.attach(thordevbtn,2,3,4,5)
 	
 	######## END MACHINES
 
@@ -223,3 +220,80 @@ def at5s_map(hostname,cascaders)
 end
 
 
+def at5e_map(hostname,cascaders)
+
+	cascwindow = Gtk::Window.new("5.03, South Lab")
+	cascwindow.set_default_size(800,600)
+	
+	cascmap = Gtk::Table.new(9,12,true)
+	######## MACHINES
+
+	# me
+#	thordevbtn = Gtk::Label.new("thordev")
+#	cascmap.attach(thordevbtn,2,3,4,5)
+
+	lift1btn = Gtk::Label.new("Lift")
+	lift2btn = Gtk::Label.new("Lift")
+	lift3btn = Gtk::Label.new("Lift")
+	cascmap.attach(lift1btn,1,2,0,1)
+	cascmap.attach(lift2btn,2,3,0,1)
+	cascmap.attach(lift3btn,3,4,0,1)
+	
+	taybtn = Gtk::Label.new("tay")
+	tarsanbtn = Gtk::Label.new("tarsan")
+	strathbergbtn = Gtk::Label.new("strathberg")
+	lessardbtn = Gtk::Label.new("lessard")
+	cascmap.attach(taybtn,0,1,3,4)
+	cascmap.attach(tarsanbtn,1,2,3,4)
+	cascmap.attach(strathbergbtn,2,3,3,4)
+	cascmap.attach(lessardbtn,3,4,3,4)
+	
+	door1btn = Gtk::Label.new("5.01 Door")
+	cascmap.attach(door1btn,4,5,4,5)
+	
+	treigbtn = Gtk::Label.new("treig")
+	getundebtn = Gtk::Label.new("getunde")
+	dandenaultbtn = Gtk::Label.new("dandenault")
+	cascmap.attach(treigbtn,0,1,5,6)
+	cascmap.attach(getundebtn,1,2,5,6)
+	cascmap.attach(dandenaultbtn,2,3,7,8)
+	
+	villeneuvebtn = Gtk::Label.new("villeneuve")
+	fangiobtn = Gtk::Label.new("fangio")
+	alonsobtn = Gtk::Label.new("alonso")
+	surteesbtn = Gtk::Label.new("surtees")
+	cascmap.attach(villeneuvebtn,8,9,1,2)
+	cascmap.attach(fangiobtn,9,10,1,2)
+	cascmap.attach(alonsobtn,10,11,1,2)
+	cascmap.attach(surteesbtn,11,12,1,2)
+	
+	fittipaldibtn = Gtk::Label.new("fittipaldi")
+	ascaribtn = Gtk::Label.new("ascari")
+	laudabtn = Gtk::Label.new("lauda")
+	prostbtn = Gtk::Label.new("prost")
+	cascmap.attach(fittipaldibtn,8,9,3,4)
+	cascmap.attach(ascaribtn,9,10,3,4)
+	cascmap.attach(laudabtn,10,11,3,4)
+	cascmap.attach(prostbtn,11,12,3,4)
+	
+	door2btn = Gtk::Label.new("5.03 Door")
+	cascmap.attach(door2btn,7,8,4,5)
+	
+	itobtn = Gtk::Label.new("Door to the ITO")
+	cascmap.attach(itobtn,6,7,6,7)
+	
+	######## END MACHINES
+
+	exitbtn = Gtk::Button.new("Close")
+   	exitbtn.signal_connect("clicked") {
+   		cascwindow.destroy
+   	}
+   	
+   	cascwindow.border_width = 10
+   	cascwindow.add(cascmap)
+	
+	update_map(hostname,cascaders,cascmap)
+	
+	cascmap.attach(exitbtn,0,1,8,9)
+	cascwindow.show_all
+end
