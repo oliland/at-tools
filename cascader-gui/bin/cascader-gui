@@ -10,7 +10,7 @@ require LIB_ROOT + '/cascader-gui'
 
 @first_run = true
 @server = nil
-@details = ["none","none"]
+@details = []
 @user = nil
 
 authors = ["Chris \'xoebus\' Brown", "Alex \'shearn89\' Shearn"]
@@ -152,8 +152,6 @@ cascadebutton.signal_connect("toggled") { |w|
 	if @user.nil?
 		@user = UserGui.new
 	end
-	
-	details = ["shearn89","[inf2,python]"]
 	
 	if @first_run
 		get_cascader_info(@user)

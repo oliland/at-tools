@@ -95,11 +95,10 @@ class ClientGui
         end
         
         (floor_cascaders & lab_cascaders).each { |dup| floor_cascaders.delete(dup) }
-
-#	unless lab_cascaders.length > 0
-	        
-	        lab_cascaders_map = lab_cascaders.slice(0..-1)
-	        
+	
+	lab_cascaders_map = lab_cascaders.slice(0..-1)
+	
+	unless lab_cascaders.length > 0        
 	        lab_cascaders.map! { |cascader| format_cascader(cascader) }
 		output = "There are #{lab_cascaders.length} cascaders in this lab:\n"
         	lab_cascaders.each { |cascader| output << cascader+"\n" }
@@ -117,11 +116,9 @@ class ClientGui
         	)
         	dialog.run
         	dialog.destroy
-#	end
+	end
         
-        puts lab_cascaders_map
-        
-#        if lab_cascaders.length > 0
+        if lab_cascaders.length > 0
         	if @user.lab == "at5n"
 	        	at5n_map(@user.hostname,lab_cascaders_map)
 	        elsif @user.lab == "at5w"
@@ -129,7 +126,7 @@ class ClientGui
         	elsif @user.lab == "at5s"
 	        	at5s_map(@user.hostname,lab_cascaders_map)
 	        end
-#	end
+		end
 	
     end
 end #class

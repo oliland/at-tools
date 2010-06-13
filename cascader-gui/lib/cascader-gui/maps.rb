@@ -9,6 +9,21 @@ def get_details(cascader)
 	return [name,host,topics]
 end
 
+def update_map(hostname,cascaders,cascmap)
+	cascmap.children.each { |machine|
+		if hostname == machine.text
+			machine.text=(">>YOU ARE HERE<<")
+			cascaders.each { |cascader|
+				details = get_details(cascader)
+				if details[1] == machine.text
+					machine.text=("CASCADER:\n#{details[0]}\n[#{details[2]}]")
+				end
+			}
+		end
+		
+	}
+end
+
 def at5n_map(hostname,cascaders)
 	cascwindow = Gtk::Window.new("5.04, North Lab")
 	cascwindow.set_default_size(800,600)
@@ -111,7 +126,9 @@ def at5n_map(hostname,cascaders)
    	
    	cascwindow.border_width = 10
    	cascwindow.add(cascmap)
-   		
+
+	update_map(hostname,cascaders,cascmap)
+   	
 	cascmap.attach(exitbtn, 2,3,10,11)
 	cascwindow.show_all
 end
@@ -186,13 +203,9 @@ def at5s_map(hostname,cascaders)
 	cascmap.attach(esperancebtn,3,4,16,17)
 	
 	# me
-	thordevbtn = Gtk::Label.new("thordev")
-	cascmap.attach(thordevbtn,2,3,4,5)
+#	thordevbtn = Gtk::Label.new("thordev")
+#	cascmap.attach(thordevbtn,2,3,4,5)
 	
-	machinelist = [dunsboroughbtn, yallingupbtn, rockinghambtn, nannupbtn,
-	yellebtn, savardbtn, harveybtn, sturmbtn, busseltonbtn, schaeferbtn,
-	sobotkabtn, bodnarchukbtn, thombtn, leeuwinbtn, mandurahbtn, subiacobtn]
-		
 	######## END MACHINES
 
 	exitbtn = Gtk::Button.new("Close")
@@ -203,14 +216,10 @@ def at5s_map(hostname,cascaders)
    	cascwindow.border_width = 10
    	cascwindow.add(cascmap)
 	
-	puts cascaders
-	
-	cascmap.children.each { |machine|
-		if hostname == machine.text
-			machine.text=(">>YOU ARE HERE<<")
-		end
-	}
+	update_map(hostname,cascaders,cascmap)
 	
 	cascmap.attach(exitbtn,0,1,8,9)
 	cascwindow.show_all
 end
+
+
