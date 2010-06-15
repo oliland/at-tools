@@ -25,6 +25,9 @@ puts "Linking programs"
 FileUtils.ln_s(AT_TOOLS_DIR + '/cascader/bin/cascader',
                AT_TOOLS_BIN + '/cascader')
 
+FileUtils.ln_s(AT_TOOLS_DIR + '/cascader-gui/bin/cascader-gui',
+	       AT_TOOLS_BIN + /cascader-gui')
+
 FileUtils.ln_s(AT_TOOLS_DIR + '/print/bin/print',
                AT_TOOLS_BIN + '/print')
 
