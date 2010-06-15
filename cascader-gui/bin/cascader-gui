@@ -27,6 +27,8 @@ window.signal_connect("delete_event") {
 #####
 si=Gtk::StatusIcon.new
 # si.stock=Gtk::Stock::DIALOG_INFO
+hearticon = Gdk::Pixbuf.new(LIB_ROOT + '/icons/cascade32.png')
+monkeyicon = Gdk::Pixbuf.new(LIB_ROOT + '/icons/cascading32.png')
 si.pixbuf=Gdk::Pixbuf.new(LIB_ROOT + '/icons/cascade32.png')
 si.tooltip='Cascader'
 

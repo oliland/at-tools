@@ -2,8 +2,6 @@ require 'socket'
 require 'pathname'
 require 'gtk2'
 
-APP_ROOT = File.join(File.dirname(Pathname.new(__FILE__).realpath),'/..')
-
 class ServerGui
     def initialize(name, host, topics)
         @server = TCPServer.new(54415)
@@ -33,7 +31,7 @@ class ServerGui
         			@status = true
         			parent.label = "Cascading..."
         			parent2.label = "Cascading..."
-        			icon.set_blinking(true)
+        			icon.pixbuf = Gdk::Pixbuf.new(LIB_ROOT + '/icons/cascading32.png')
         			@logfile.puts "-----\nStarted Cascading at #{Time.now.strftime("%d/%m/%y - %H:%M:%S")}"
 		        	@looper = Thread.start {
 		        		while (session = @server.accept)
@@ -66,7 +64,7 @@ class ServerGui
         		when Gtk::Dialog::RESPONSE_OK
         			parent.label = "Not Cascading."
         			parent2.label = "Not Cascading."
-        			icon.set_blinking(false)
+        			icon.pixbuf = Gdk::Pixbuf.new(LIB_ROOT + '/icons/cascade32.png')
         			@logfile.puts "Stopped Cascading at #{Time.now.strftime("%d/%m/%y - %H:%M:%S")}\n-----"
         			@status = false
         			@looper.exit

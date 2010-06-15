@@ -10,10 +10,11 @@
 - Search for Cascaders on your floor
 - Cascade, specifying username and topics.
 - Minimize to system tray: you can close the main window and still access all functions from the tray.
-- Tray icon blinks when cascading.
+- Tray icon changes when cascading.
+- Graphical map of your lab and where cascaders are, if there are cascaders in your lab.
 
 ## Future functionality ##
-- <s>Graphical map of your lab/floor and where cascaders are.</s> In progress! Shots below.
+- Maybe a messaging interface? Anyone got some ideas for it?
 
 ## Screenshots ##
 ![Main Interface](http://github.com/xoebus/at-tools/raw/master/cascader-gui/screens/main.png)
