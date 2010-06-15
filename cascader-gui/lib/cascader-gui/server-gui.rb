@@ -1,5 +1,8 @@
 require 'socket'
+require 'pathname'
 require 'gtk2'
+
+APP_ROOT = File.join(File.dirname(Pathname.new(__FILE__).realpath),'/..')
 
 class ServerGui
     def initialize(name, host, topics)
@@ -9,7 +12,7 @@ class ServerGui
         @topics = topics.map { |topic| topic.gsub('[', '').gsub(']', '') }
         @status = false
         @looper = nil
-        @logfile = File.open("cascader_server_log", 'a')
+        @logfile = File.open("#{APP_ROOT}/cascader_server_log", 'a')
     end
     
     def start(parent,parent2,icon)
