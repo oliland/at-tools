@@ -7,6 +7,7 @@ require 'gtk2'
 APP_ROOT = File.join(File.dirname(Pathname.new(__FILE__).realpath),'/..')
 LIB_ROOT = APP_ROOT + '/lib'
 require LIB_ROOT + '/cascader-gui'
+ICON_ROOT = LIB_ROOT + '/icons'
 
 @first_run = true
 @server = nil
@@ -15,8 +16,17 @@ require LIB_ROOT + '/cascader-gui'
 
 authors = ["Chris \'xoebus\' Brown", "Alex \'shearn89\' Shearn"]
 
+window_icons=[
+	Gdk::Pixbuf.new(ICON_ROOT+"/cascade16.png"),
+	Gdk::Pixbuf.new(ICON_ROOT+"/cascade32.png"),
+	Gdk::Pixbuf.new(ICON_ROOT+"/cascade48.png"),
+	Gdk::Pixbuf.new(ICON_ROOT+"/cascade64.png"),
+	Gdk::Pixbuf.new(ICON_ROOT+"/cascade128.png")]
+
 window = Gtk::Window.new
 window.set_default_size(400,200)
+window.icon_list=(window_icons)
+# window.default_icon_list=(window_icons)
 window.signal_connect("delete_event") {
 	window.hide_all
 }
