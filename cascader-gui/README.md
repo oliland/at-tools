@@ -12,6 +12,7 @@
 - Minimize to system tray: you can close the main window and still access all functions from the tray.
 - Tray icon changes when cascading.
 - Graphical map of your lab and where cascaders are, if there are cascaders in your lab.
+- Dialog to inform me of new machines via email, making it quicker to build the lab maps.
 
 ## Future functionality ##
 - Maybe a messaging interface? Anyone got some ideas for it?
