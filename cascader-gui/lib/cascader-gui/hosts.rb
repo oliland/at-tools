@@ -1,3 +1,62 @@
+def get_machine_info
+    dialog = Gtk::Dialog.new("Machine Not Found!",
+                             $main_application_window,
+                             Gtk::Dialog::MODAL,
+                             [ Gtk::Stock::OK, Gtk::Dialog::RESPONSE_ACCEPT ],
+                             [ Gtk::Stock::CANCEL, Gtk::Dialog::RESPONSE_REJECT ])
+    dialog.set_default_size(300,100)
+    dialog.set_default_response(Gtk::Dialog::RESPONSE_ACCEPT)
+    
+    entry1 = Gtk::Entry.new
+    entry1.max_length=50
+    hostname = ENV['HOSTNAME']
+    hostname ||= "Please enter details (once)."
+    entry1.text = hostname
+    entry1.select_region(0,-1)
+
+    entry1lbl = Gtk::Label.new("Machine Name: ")
+    entry2lbl = Gtk::Label.new("Lab: ")
+    entry3lbl = Gtk::Label.new("Floor: ")
+    
+    entry2 = Gtk::Entry.new
+    entry2.max_length=50
+    entry2.set_activates_default(true)
+    entry2.text = "Which lab are you in?"
+    entry2.select_region(0,-1)
+    
+    entry3 = Gtk::Entry.new
+    entry3.max_length=30
+    entry3.set_activates_default(true)
+    entry3.text = "Which floor are you on?"
+    entry3.select_region(0,-1)
+
+
+    tableholder = Gtk::Table.new(3,3,true)
+    
+    tableholder.attach(entry1lbl,0,1,0,1)
+    tableholder.attach(entry1,1,3,0,1)
+    tableholder.attach(entry2lbl,0,1,1,2)
+    tableholder.attach(entry2,1,3,1,2)
+    tableholder.attach(entry3lbl,0,1,2,3)
+    tableholder.attach(entry3,1,3,2,3)
+
+    dialog.vbox.add(tableholder)
+    
+    dialog.show_all
+    
+    dialog.run do |reply|
+    	case reply
+    		when Gtk::Dialog::RESPONSE_ACCEPT
+		        mailer(["cascaders","cascaders@isthat.it"],
+		        	"cascaders@isthat.it",
+		        	"[cascader] new machine info - #{entry1.text}",
+		        	"New Machine Found: #{entry1.text}, in #{entry2.text} on level #{entry3.text}.
+Please add in to the program.")
+    	end
+    	dialog.destroy
+    end
+end
+
 class HostManager
     level5_n = IO.readlines(File.dirname(__FILE__) + '/../../hosts/level5-n.txt').map {|host| host.chomp}
     level5_s = IO.readlines(File.dirname(__FILE__) + '/../../hosts/level5-s.txt').map {|host| host.chomp}
@@ -25,7 +84,8 @@ class HostManager
                 return lab if computers.include? hostname
             end
         end
-        # puts "The computer you are using appears not to exist, are you on DICE and on level5?"
+        # puts "The computer [%s] you are using appears not to exist, are you on DICE and on level5?" % hostname
+        
         error = Gtk::MessageDialog.new($main_app_window,
         	Gtk::Dialog::MODAL,
         	Gtk::MessageDialog::INFO,
@@ -43,6 +103,9 @@ class HostManager
                 return floor if computers.include? hostname
             end
         end
+        
+        get_machine_info
+        
         # puts "The computer you are using appears not to exist, are you on DICE and on level5?"
         error = Gtk::MessageDialog.new($main_app_window,
         	Gtk::Dialog::MODAL,
