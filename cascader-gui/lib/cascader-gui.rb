@@ -2,7 +2,7 @@ CAS_ROOT = File.join(File.dirname(Pathname.new(__FILE__).realpath), '/cascader-g
 
 require CAS_ROOT + '/colour'
 require CAS_ROOT + '/user-gui'
-require CAS_ROOT + '/hosts'
+require CAS_ROOT + '/hosts-gui'
 require CAS_ROOT + '/client-gui'
 require CAS_ROOT + '/server-gui'
 require CAS_ROOT + '/maps'
