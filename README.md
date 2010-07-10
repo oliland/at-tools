@@ -4,4 +4,4 @@
 
 ### Installing
 
-    wget http://github.com/xoebus/at-tools/raw/master/tools/install.sh -O - | sh
+    wget http://github.com/lolsoft/at-tools/raw/master/tools/install.sh -O - | sh
