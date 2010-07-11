@@ -19,8 +19,7 @@ elsif ARGV.first.eql? "cascade"
     cascade, name, *topics = ARGV
     server = Server.new(name, user.hostname, topics)
 elsif ARGV.first.eql? "gui"
-    gui = '#{APP_ROOT}/../cascader-gui/bin/cascader-gui'
-    Thread.new{system(gui)}
+    Thread.new{system('cascader-gui')}
 else
     client = Client.new(user)
     client.search
