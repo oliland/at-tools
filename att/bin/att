@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'pathname'
+require File.join(File.dirname(Pathname.new(__FILE__).realpath),'../lib/att')
+
+if ARGV.first.eql? "update"
+  updater = Updater.new
+  updater.update
+elsif ARGV.first.eql? "man"
+  puts "Help system not implemented yet. Apologies."
+else
+  puts "Usage: att [update | man]"
+end
